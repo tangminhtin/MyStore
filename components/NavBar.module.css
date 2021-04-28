@@ -1,0 +1,35 @@
+.imageLogo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.brandName {
+  font-size: 1.5em;
+  margin-left: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #ff8474;
+}
+
+.navLink {
+  margin: 5px;
+  border: 3px solid transparent;
+  border-radius: 20%;
+}
+
+.navLink:hover {
+  border-top: 3px solid salmon;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  border-bottom: 3px solid salmon;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  transition: 1s;
+}
+
+.active {
+  border: 3px solid transparent;
+  background-color: #b0efeb;
+  border-radius: 15%;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
