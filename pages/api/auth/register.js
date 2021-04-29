@@ -18,7 +18,7 @@ const register = async (req, res) => {
     const { name, email, password, confirm } = req.body;
 
     const errMsg = valid(name, email, password, confirm);
-    if (errMsg) return res.status(500).json({ err: errMsg });
+    if (errMsg) return res.status(400).json({ err: errMsg });
 
     const user = await Users.findOne({ email });
     if (user)

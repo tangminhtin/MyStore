@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   // const { auth } = state;
 
   return (
-    <DataContext.Provider value={[state, dispatch]}>
+    <DataContext.Provider value={{state, dispatch}}>
       {children}
     </DataContext.Provider>
   );

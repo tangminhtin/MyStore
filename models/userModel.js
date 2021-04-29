@@ -31,5 +31,5 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Dataset = mongoose.model.user || mongoose.model("user", userSchema);
+const Dataset = mongoose.models.user || mongoose.model("user", userSchema);
 export default Dataset;

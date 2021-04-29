@@ -9,7 +9,7 @@ const connectDB = () => {
   mongoose.connect(
     process.env.MONGODB_URL,
     {
-      userCreateIndex: true,
+      useCreateIndex: true,
       useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
