@@ -17,7 +17,7 @@ function NavBar() {
     localStorage.removeItem("firstLogin");
 
     dispatch({ type: "AUTH", payload: {} });
-    dispatch({ type: "NOTIFY", payload: { success: "Logged out!" } });
+    dispatch({ type: "NOTIFY", payload: { success: "Đăng xuất thành công!" } });
     return router.push("/");
   };
 
@@ -44,15 +44,9 @@ function NavBar() {
           aria-expanded="false"
         >
           <img
+            className={classes.avatar}
             src={auth.user.avatar}
             alt={auth.user.avatar}
-            style={{
-              borderRadius: "50%",
-              width: "30px",
-              height: "30px",
-              transform: "translateY(-3px)",
-              marginRight: "3px",
-            }}
           />{" "}
           {auth.user.name}
         </a>
