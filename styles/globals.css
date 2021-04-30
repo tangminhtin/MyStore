@@ -22,3 +22,9 @@ img {
 
 /* ----------- Loading ------------- */
 @import url("./loading.css");
+
+/* --------- Detail Product ----------- */
+.detail_page .img-thumbnail.active{
+  border-color: orangered;
+  padding: 2px;
+}
