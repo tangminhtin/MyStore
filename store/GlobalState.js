@@ -5,8 +5,9 @@ import { getData } from "../utils/fetchData";
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const initialState = { notify: {}, auth: {} };
+  const initialState = { notify: {}, auth: {}, cart: [] };
   const [state, dispatch] = useReducer(reducers, initialState);
+  const { cart, auth } = state;
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -23,6 +24,17 @@ export const DataProvider = ({ children }) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const __cart__minhtin = JSON.parse(localStorage.getItem("__cart__minhtin"));
+    if (__cart__minhtin)
+      dispatch({ type: "ADD_CART", payload: __cart__minhtin });
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("__cart__minhtin", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <DataContext.Provider value={{ state, dispatch }}>
       {children}

@@ -8,7 +8,7 @@ import Cookie from "js-cookie";
 function NavBar() {
   const router = useRouter();
   const { state, dispatch } = useContext(DataContext);
-  const { auth } = state;
+  const { auth, cart } = state;
 
   const isActive = (r) => (r === router.pathname ? " " + classes.active : "");
 
@@ -125,7 +125,26 @@ function NavBar() {
                 <a
                   className={"nav-link " + classes.navLink + isActive("/cart")}
                 >
-                  <i className="fas fa-shopping-cart" aria-hidden></i> Giỏ hàng
+                  <i
+                    className="fas fa-shopping-cart position-relative"
+                    aria-hidden
+                  >
+                    <span
+                      className="position-absolute"
+                      style={{
+                        padding: "3px 6px",
+                        background: "#ed143dc2",
+                        borderRadius: "50%",
+                        top: "-10px",
+                        right: "-10px",
+                        color: "#fff",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {cart.length}
+                    </span>
+                  </i>{" "}
+                  Giỏ hàng
                 </a>
               </Link>
             </li>

@@ -1,10 +1,15 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { getData } from "../../utils/fetchData";
+import { DataContext } from "../../store/GlobalState";
+import { addToCart } from "../../store/Actions";
 
 const DetailProduct = (props) => {
   const [product] = useState(props.product);
   const [tab, setTab] = useState(0);
+
+  const { state, dispatch } = useContext(DataContext);
+  const { cart } = state;
 
   const isActive = (index) => {
     return tab === index ? " active" : "";
@@ -13,7 +18,7 @@ const DetailProduct = (props) => {
   return (
     <div className="row">
       <Head>
-        <title>Chi tiết sản phẩm</title>
+        <title>{product.title}</title>
       </Head>
       <div className="col-md-6 detail_page">
         <img
@@ -41,18 +46,18 @@ const DetailProduct = (props) => {
         <h5 className="text-danger">{product.price}₫</h5>
         <div className="d-flex justify-content-between">
           {product.inStock > 0 ? (
-            <h6 className="text-danger">In Stock: {product.inStock}</h6>
+            <h6 className="text-danger">Kho còn: {product.inStock}</h6>
           ) : (
-            <h6 className="text-danger">Out Stock</h6>
+            <h6 className="text-danger">Hết hàng</h6>
           )}
-          <h6 className="text-danger">Sold: {product.sold}</h6>
+          <h6 className="text-danger">Đã bán: {product.sold}</h6>
         </div>
         <div className="my-2">{product.description}</div>
         <div className="my-2">{product.content}</div>
         <button
           type="button"
           className="btn btn-success d-block my-3 px-5"
-          onClick={null}
+          onClick={() => dispatch(addToCart(product, cart))}
         >
           Mua
         </button>
