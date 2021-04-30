@@ -1,0 +1,41 @@
+.borderCard:last-child {
+  border-bottom-left-radius: 1.8rem;
+  border-bottom-right-radius: 1.8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.borderCard {
+  border-top-left-radius: 1.8rem;
+  border-top-right-radius: 1.8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.cardTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardText {
+  height: 70px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.button {
+  color: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.button:focus {
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+}
