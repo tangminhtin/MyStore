@@ -3,28 +3,29 @@ import { useContext, useState, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
 import CartItem from "../components/CartItem";
 import Link from "next/link";
-import { getData, postData } from "../utils/fetchData";
-import { useRouter } from "next/router";
+import { getData } from "../utils/fetchData";
+import PaypalBtn from "./paypalBtn";
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
-  const { cart } = state;
+  const { cart, auth } = state;
 
   const [address, setAddress] = useState("");
   const [mobile, setMobile] = useState("");
   const [total, setTotal] = useState(0);
 
   const [callback, setCallback] = useState(false);
-  // const router = useRouter();
+  const [payment, setPayment] = useState(false);
 
   useEffect(() => {
     const getTotal = () => {
       const res = cart.reduce((prev, item) => {
-        return prev + item.quantity * item.price;
+        return prev + item.price * item.quantity;
       }, 0);
-
       setTotal(res);
     };
+
+    getTotal();
   }, [cart]);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ const Cart = () => {
         for (const item of cartLocal) {
           const res = await getData(`product/${item._id}`);
           const { _id, title, images, price, inStock, sold } = res.product;
+
           if (inStock > 0) {
             newArr.push({
               _id,
@@ -50,9 +52,19 @@ const Cart = () => {
 
         dispatch({ type: "ADD_CART", payload: newArr });
       };
+
       updateCart();
     }
   }, [callback]);
+
+  const handlePayment = () => {
+    if (!address || !mobile)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "Vui lòng điền điện chỉ và số điện thoại!" },
+      });
+    setPayment(true);
+  };
 
   return (
     <div>
@@ -86,34 +98,51 @@ const Cart = () => {
                 </tbody>
               </table>
             </div>
-            <div className="col-md-4 my-3 text-end text-uppercase text-secondary">
+
+            <div className="col-md-4 text-secondary text-end text-uppercase my-3">
               <form>
                 <h2>Vận chuyển</h2>
-                <label htmlFor="address">Địa chỉ</label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={address}
-                  className="form-control mb-2"
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-                <label htmlFor="mobile">Điện thoại</label>
-                <input
-                  type="text"
-                  id="mobile"
-                  name="mobile"
-                  value={mobile}
-                  className="form-control mb-2"
-                  onChange={(e) => setMobile(e.target.value)}
-                />
+                <div className="form-group">
+                  <label htmlFor="address">Địa chỉ</label>
+                  <input
+                    type="text"
+                    className="form-control mb-2"
+                    id="address"
+                    name="address"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="mobile">Điện thoại</label>
+                  <input
+                    type="text"
+                    className="form-control mb-2"
+                    id="mobile"
+                    name="mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                  />
+                </div>
+                <h3>
+                  Tổng tiền: <span className="text-danger mb-2">{total}₫</span>
+                </h3>
+                {payment ? (
+                  <PaypalBtn
+                    total={total}
+                    address={address}
+                    mobile={mobile}
+                    state={state}
+                    dispatch={dispatch}
+                  />
+                ) : (
+                  <Link href={auth.user ? "#!" : "/signin"}>
+                    <a className="btn btn-dark mb-2" onClick={handlePayment}>
+                      Tiến hành thanh toán
+                    </a>
+                  </Link>
+                )}
               </form>
-              <h3>
-                Tổng tiền: <span className="text-danger">{total}₫</span>
-              </h3>
-              <Link href={"#!"}>
-                <a className="btn btn-dark my-2">Tiến hành thanh toán</a>
-              </Link>
             </div>
           </div>
         )}
