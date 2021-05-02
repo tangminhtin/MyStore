@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
 import Link from "next/link";
+import valid from "../utils/valid";
+import { patchData } from "../utils/fetchData";
 
 const Profile = () => {
   const initialState = {
@@ -29,7 +31,29 @@ const Profile = () => {
 
   const changeAvatar = (e) => {};
 
-  const handleUpdateProfile = (e) => {};
+  const handleUpdateProfile = (e) => {
+    e.preventDefault();
+
+    if (password) {
+      const errMsg = valid(name, auth.user.email, password, confirm);
+      if (errMsg)
+        return dispatch({ type: "NOTIFY", payload: { error: errMsg } });
+      updatePassword();
+    }
+
+    // if (name !== auth.name || avatar) updateInfor();
+  };
+
+  const updatePassword = () => {
+    dispatch({ type: "NOTIFY", payload: { loading: true } });
+    patchData("user/resetPassword", { password }, auth.token).then((res) => {
+      if (res.err)
+        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+      return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+    });
+  };
+
+  // const updateInfor = () => {};
 
   if (!auth.user) return null;
 
