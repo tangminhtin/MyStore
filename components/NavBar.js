@@ -52,9 +52,11 @@ function NavBar() {
         </a>
         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
+            <Link href="/profile">
             <a className="dropdown-item" href="#">
               Thông tin cá nhân
             </a>
+            </Link>
           </li>
           <li>
             <a className="dropdown-item" href="#">
