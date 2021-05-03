@@ -4,7 +4,7 @@ import { DataContext } from "../store/GlobalState";
 import Link from "next/link";
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
-import {imageUpload} from '../utils/imageUpload'
+import { imageUpload } from "../utils/imageUpload";
 
 const Profile = () => {
   const initialState = {
@@ -77,22 +77,30 @@ const Profile = () => {
 
   const updateInfor = async () => {
     let media;
-    dispatch({type: "NOTIFY", payload: {loading: true}})
-    if(avatar) media = await imageUpload([avatar])
+    dispatch({ type: "NOTIFY", payload: { loading: true } });
+    if (avatar) media = await imageUpload([avatar]);
 
-    patchData("user", {
-      name, avatar: avatar ? media[0].url : auth.user.avatar
-    }, auth.token).then(res=> {
-      if (res.err) return dispatch({type: 'NOTIFY', payload: {error: res.err}})
+    patchData(
+      "user",
+      {
+        name,
+        avatar: avatar ? media[0].url : auth.user.avatar,
+      },
+      auth.token
+    ).then((res) => {
+      if (res.err)
+        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
 
-      dispatch({type: "AUTH", payload: {
-        token: auth.token,
-        user: res.user
-      }})
+      dispatch({
+        type: "AUTH",
+        payload: {
+          token: auth.token,
+          user: res.user,
+        },
+      });
 
-      return dispatch({type: 'NOTIFY', payload: {success: res.msg}})
-    })
-
+      return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+    });
   };
 
   if (!auth.user) return null;
@@ -104,7 +112,7 @@ const Profile = () => {
       </Head>
 
       <section className="row text-secondary my-3">
-        <div className="col-md-4">
+        <div className="col-md-4 table-responsive">
           <h3 className="text-center text-uppercase">
             {auth.user.role === "user"
               ? "Thông tin người dùng"
@@ -173,14 +181,62 @@ const Profile = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-dark"
+            className="btn btn-dark my-3"
             disabled={notify.loading}
             onClick={handleUpdateProfile}
           >
             Cập nhật
           </button>
         </div>
-        <div className="col-md-8"></div>
+
+        <div className="col-md-8 table-responsive">
+          <h3 className="text-uppercase">Đơn hàng</h3>
+          <div className="my-3 table-responsive">
+            <table
+              className="table-bordered table-hover w-100 text-uppercase"
+              style={{ minWidth: "600px", cursor: "pointer" }}
+            >
+              <thead className="bg-light fw-bold text-center">
+                <tr>
+                  <td className="p-2">id</td>
+                  <td className="p-2">Ngày đặt hàng</td>
+                  <td className="p-2">Tổng tiền</td>
+                  <td className="p-2">Giao hàng</td>
+                  <td className="p-2">Thanh toán</td>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id} className="text-center">
+                    <td className="p-2">
+                      <Link href={`/order/${order._id}`}>
+                        <a>{order._id}</a>
+                      </Link>
+                    </td>
+                    <td className="p-2">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="p-2 text-end">{order.total}₫</td>
+                    <td className="p-2">
+                      {order.delivered ? (
+                        <i className="fas fa-check text-success"></i>
+                      ) : (
+                        <i className="fas fa-times text-danger"></i>
+                      )}
+                    </td>
+                    <td className="p-2">
+                      {order.paid ? (
+                        <i className="fas fa-check text-success"></i>
+                      ) : (
+                        <i className="fas fa-times text-danger"></i>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </div>
   );
