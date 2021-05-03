@@ -4,6 +4,7 @@ import { DataContext } from "../store/GlobalState";
 import Link from "next/link";
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
+import {imageUpload} from '../utils/imageUpload'
 
 const Profile = () => {
   const initialState = {
@@ -29,8 +30,6 @@ const Profile = () => {
     dispatch({ type: "NOTIFY", payload: {} });
   };
 
-  const changeAvatar = (e) => {};
-
   const handleUpdateProfile = (e) => {
     e.preventDefault();
 
@@ -41,7 +40,7 @@ const Profile = () => {
       updatePassword();
     }
 
-    // if (name !== auth.name || avatar) updateInfor();
+    if (name !== auth.name || avatar) updateInfor();
   };
 
   const updatePassword = () => {
@@ -53,7 +52,48 @@ const Profile = () => {
     });
   };
 
-  // const updateInfor = () => {};
+  const changeAvatar = (e) => {
+    const file = e.target.files[0];
+    if (!file)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "Tệp tin không tồn tại." },
+      });
+
+    if (file.size > 1024 * 1024 * 5)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "Hình ảnh có kích thước tối đa là 5MB." },
+      });
+
+    if (file.type !== "image/jpeg" && file.type !== "image/png")
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "Sai định dạng hình ảnh." },
+      });
+
+    setData({ ...data, avatar: file });
+  };
+
+  const updateInfor = async () => {
+    let media;
+    dispatch({type: "NOTIFY", payload: {loading: true}})
+    if(avatar) media = await imageUpload([avatar])
+
+    patchData("user", {
+      name, avatar: avatar ? media[0].url : auth.user.avatar
+    }, auth.token).then(res=> {
+      if (res.err) return dispatch({type: 'NOTIFY', payload: {error: res.err}})
+
+      dispatch({type: "AUTH", payload: {
+        token: auth.token,
+        user: res.user
+      }})
+
+      return dispatch({type: 'NOTIFY', payload: {success: res.msg}})
+    })
+
+  };
 
   if (!auth.user) return null;
 
@@ -71,7 +111,10 @@ const Profile = () => {
               : "Thông tin Admin"}
           </h3>
           <div className="avatar">
-            <img src={auth.user.avatar} alt="avatar" />
+            <img
+              src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
+              alt="avatar"
+            />
             <span>
               <i className="fas fa-camera"></i>
               <p>Cập nhật</p>
