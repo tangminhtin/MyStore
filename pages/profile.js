@@ -22,7 +22,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (auth.user) setData({ ...data, name: auth.user.name });
-  }, [auth.userr]);
+  }, [auth.user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +40,7 @@ const Profile = () => {
       updatePassword();
     }
 
-    if (name !== auth.name || avatar) updateInfor();
+    if (name !== auth.name && name || avatar) updateInfor();
   };
 
   const updatePassword = () => {

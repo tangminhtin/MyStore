@@ -37,7 +37,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(auth).lenth !== 0) router.push("/");
+    if (Object.keys(auth).length !== 0) router.push("/");
   }, [auth]);
 
   return (

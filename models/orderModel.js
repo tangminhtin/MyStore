@@ -11,6 +11,7 @@ const orderSchema = new mongoose.Schema(
     cart: Array,
     total: Number,
     paymentId: String,
+    method: String,
     delivered: {
       type: Boolean,
       default: false,
