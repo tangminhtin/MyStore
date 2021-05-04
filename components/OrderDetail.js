@@ -34,18 +34,22 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
       {orderDetail.map((order) => (
         <div
           key={order._id}
-          className="row text-uppercase my-3"
+          className="row my-3"
           style={{ margin: "20px auto" }}
         >
-          <div className="col-md-8 text-uppercase my-3">
-            <h2 className="word-break">Đơn hàng {order._id}</h2>
+          <div className="col-md-8 my-3">
+            <h2 className="word-break text-uppercase">Đơn hàng {order._id}</h2>
             <div className="mt-4 text-secondary">
-              <h4>Thông tin giao hàng</h4>
-              <p>Họ và tên: {order.user.name}</p>
+              <h4 className="text-uppercase mt-3">Thông tin giao hàng</h4>
+              <p>
+                Họ và tên:{" "}
+                <span className="text-capitalize">{order.user.name}</span>
+              </p>
               <p>Email: {order.user.email}</p>
               <p>Địa chỉ: {order.address}</p>
               <p>Số điện thoại: {order.mobile}</p>
 
+              <h4 className="text-uppercase mt-3">Trạng thái đơn hàng</h4>
               <div
                 className={`alert ${
                   order.delivered ? "alert-success" : "alert-danger"
@@ -53,11 +57,13 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                 role="alert"
               >
                 {order.delivered
-                  ? `Đã giao hàng vào ${order.updatedAt}`
+                  ? `Đã giao hàng vào ${new Date(
+                      order.updatedAt
+                    ).toLocaleString("vi-VN")}`
                   : "Chưa giao hàng"}
                 {auth.user.role === "admin" && !order.delivered && (
                   <button
-                    className="btn btn-dark text-uppercase"
+                    className="btn btn-dark"
                     onClick={() => handleDelivered(order)}
                   >
                     Đánh dấu là đã giao hàng
@@ -65,18 +71,17 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                 )}
               </div>
 
-              <h3>Thanh toán</h3>
+              <h4 className="text-uppercase mt-3">Thanh toán</h4>
               {order.method && (
-                <h6>
-                  Phương thức: <em>{order.method}</em>
-                </h6>
+                <p>
+                  Hình thức thanh toán: <em>{order.method}</em>
+                </p>
               )}
               {order.paymentId && (
                 <p>
-                  ID thanh toánÏ: <em>{order.paymentId}</em>
+                  ID thanh toán: <em>{order.paymentId}</em>
                 </p>
               )}
-
               <div
                 className={`alert ${
                   order.paid ? "alert-success" : "alert-danger"
@@ -84,12 +89,14 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                 role="alert"
               >
                 {order.paid
-                  ? `Đã thanh toán vào ${order.dateOfPayment}`
+                  ? `Đã thanh toán vào ${new Date(
+                      order.dateOfPayment
+                    ).toLocaleString("vi-VN")}`
                   : "Chưa thanh toán"}
               </div>
 
               <div>
-                <h4>Chi tiết sản phẩm</h4>
+                <h4 className="text-uppercase mt-3">Chi tiết sản phẩm</h4>
                 {order.cart.map((item) => (
                   <div
                     className="d-flex border-bottom mx-0 p-2 align-items-center align-self-center"
@@ -106,7 +113,7 @@ const OrderDetail = ({ orderDetail, state, dispatch }) => {
                     />
                     <h6 className="flex-fill text-secondary px-3 m-0">
                       <Link href={`/product/${item._id}`}>
-                        <a>{item.title}</a>
+                        <a className="text-capitalize">{item.title}</a>
                       </Link>
                     </h6>
                     <span className="text-info m-0">

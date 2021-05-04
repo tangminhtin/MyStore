@@ -118,7 +118,7 @@ const Profile = () => {
               ? "Thông tin người dùng"
               : "Thông tin Admin"}
           </h3>
-          <div className="avatar">
+          <div className="avatar shadow">
             <img
               src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
               alt="avatar"
@@ -198,8 +198,8 @@ const Profile = () => {
             >
               <thead className="bg-light fw-bold text-center">
                 <tr>
-                  <td className="p-2">id</td>
-                  <td className="p-2">Ngày đặt hàng</td>
+                  <td className="p-2">Mã đơn hàng</td>
+                  <td className="p-2">Ngày mua</td>
                   <td className="p-2">Tổng tiền</td>
                   <td className="p-2">Giao hàng</td>
                   <td className="p-2">Thanh toán</td>
@@ -214,7 +214,7 @@ const Profile = () => {
                       </Link>
                     </td>
                     <td className="p-2">
-                      {new Date(order.createdAt).toLocaleDateString()}
+                      {new Date(order.createdAt).toLocaleDateString("vi-VN")}
                     </td>
                     <td className="p-2 text-end">{order.total}₫</td>
                     <td className="p-2">

@@ -23,17 +23,21 @@ const DetailOrder = () => {
       <Head>
         <title>Chi tiết đơn hàng {router.query.id}</title>
       </Head>
-      <div>
-        <button className="btn btn-dark" onClick={() => router.back()}>
-          <i className="fas fa-arrow-circle-left" aria-hidden></i> Trở về
-        </button>
-      </div>
 
       <OrderDetail
         orderDetail={orderDetail}
         state={state}
         dispatch={dispatch}
       />
+
+      <div className="d-flex justify-content-between">
+        <button className="btn btn-dark" onClick={() => router.back()}>
+          <i className="fas fa-arrow-circle-left" aria-hidden></i> Trở về
+        </button>
+        <button className="btn btn-dark" onClick={() => router.push("/")}>
+          Mua tiếp <i className="fas fa-arrow-circle-right" aria-hidden></i>
+        </button>
+      </div>
     </div>
   );
 };

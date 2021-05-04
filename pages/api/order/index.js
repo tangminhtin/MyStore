@@ -26,10 +26,11 @@ const getOrders = async (req, res) => {
         "user",
         "-password"
       );
-      res.json({ orders });
     } else {
       orders = await Orders.find().populate("user", "-password");
     }
+
+    res.json({ orders });
   } catch (err) {
     return res.status(500).json({ err: err.message });
   }

@@ -29,7 +29,7 @@ const Cart = () => {
   }, [cart]);
 
   useEffect(() => {
-    const cartLocal = JSON.parse(localStorage.getItem("__cart__minhtin"));
+    const cartLocal = JSON.parse(localStorage.getItem("__cart__minhtin__"));
     if (cartLocal && cartLocal.length > 0) {
       let newArr = [];
       const updateCart = async () => {
@@ -129,7 +129,7 @@ const Cart = () => {
 
             <div className="col-md-4 text-secondary text-end text-uppercase my-3">
               <form>
-                <h2>Vận chuyển</h2>
+                <h2>Giao hàng đến</h2>
                 <div className="form-group">
                   <label htmlFor="address">Địa chỉ</label>
                   <input
@@ -158,7 +158,7 @@ const Cart = () => {
 
                 <Link href={auth.user ? "#!" : "/signin"}>
                   <a className="btn btn-dark mb-2" onClick={handlePayment}>
-                    Tiến hành thanh toán
+                    Tiến hành đặt hàng
                   </a>
                 </Link>
               </form>

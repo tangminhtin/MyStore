@@ -26,7 +26,11 @@ const paypalBtn = ({ order }) => {
           dispatch({ type: "NOTIFY", payload: { loading: true } });
 
           return actions.order.capture().then(function (details) {
-            patchData(`order/${order._id}`, null, auth.token).then((res) => {
+            patchData(
+              `order/payment/${order._id}`,
+              { paymentId: details.payer.payer_id },
+              auth.token
+            ).then((res) => {
               if (res.err)
                 return dispatch({ type: "NOTIFY", payload: { err: res.err } });
 
@@ -37,7 +41,9 @@ const paypalBtn = ({ order }) => {
                   {
                     ...order,
                     paid: true,
-                    dateOfPayment: new Date().toISOString(),
+                    dateOfPayment: details.create_time,
+                    paymentId: details.payer.paid,
+                    method: "Paypal",
                   },
                   "ADD_ORDERS"
                 )

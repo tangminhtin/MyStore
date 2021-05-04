@@ -53,16 +53,14 @@ function NavBar() {
         <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
             <Link href="/profile">
-            <a className="dropdown-item" href="#">
-              Thông tin cá nhân
-            </a>
+              <a className="dropdown-item" href="#">
+                Thông tin cá nhân
+              </a>
             </Link>
           </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Another action
-            </a>
-          </li>
+
+          {auth.user.role === "admin" && adminRouter()}
+
           <li>
             <hr className="dropdown-divider" />
           </li>
@@ -73,6 +71,34 @@ function NavBar() {
           </li>
         </ul>
       </li>
+    );
+  };
+
+  const adminRouter = () => {
+    return (
+      <>
+        <li>
+          <Link href="/users">
+            <a className="dropdown-item" href="#">
+              Người dùng
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/create">
+            <a className="dropdown-item" href="#">
+              Sản phẩm
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/categories">
+            <a className="dropdown-item" href="#">
+              Danh mục
+            </a>
+          </Link>
+        </li>
+      </>
     );
   };
 
