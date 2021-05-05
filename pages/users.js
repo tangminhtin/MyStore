@@ -14,7 +14,10 @@ const Users = () => {
       <Head>
         <title>Quản lý người dùng</title>
       </Head>
-      <table className="table w-100 text-center ">
+      <h1 className="text-uppercase text-center p-3 text-primary">
+        Quản lý người dùng
+      </h1>
+      <table className="table w-100 text-center">
         <thead>
           <tr>
             <th>STT</th>
@@ -64,19 +67,22 @@ const Users = () => {
                   href={
                     auth.user.root && auth.user.email !== user.email
                       ? `/edit_user/${user._id}`
-                      : "$!"
+                      : "#!"
                   }
                 >
                   <a>
-                    <i className="fas fa-edit text-info mr-2" title="Edit"></i>
+                    <i
+                      className="fas fa-edit text-info ms-3 me-3"
+                      title="Edit"
+                    ></i>
                   </a>
                 </Link>
                 {auth.user.root && auth.user.email !== user.email ? (
                   <i
-                    className="fas fa-trash-alt text-danger ml-2"
+                    className="fas fa-trash-alt text-danger ms-3 me-3"
                     title="Remove"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
+                    data-bs-toggle="modal"
+                    data-bs-target="#itemTrash"
                     onClick={() =>
                       dispatch({
                         type: "ADD_MODAL",
@@ -93,7 +99,7 @@ const Users = () => {
                   ></i>
                 ) : (
                   <i
-                    className="fas fa-trash-alt text-danger ml-2"
+                    className="fas fa-trash-alt text-danger ms-3 me-3"
                     title="Remove"
                   ></i>
                 )}
