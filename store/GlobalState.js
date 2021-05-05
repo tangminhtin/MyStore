@@ -33,15 +33,15 @@ export const DataProvider = ({ children }) => {
       });
     }
 
-    // getData("categories").then((res) => {
-    //   if (res.err)
-    //     return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+    getData("categories").then((res) => {
+      if (res.err)
+        return dispatch({ type: "NOTIFY", payload: { error: res.err } });
 
-    //   dispatch({
-    //     type: "ADD_CATEGORIES",
-    //     payload: res.categories,
-    //   });
-    // });
+      dispatch({
+        type: "ADD_CATEGORIES",
+        payload: res.categories,
+      });
+    });
   }, []);
 
   useEffect(() => {

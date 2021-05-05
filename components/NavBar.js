@@ -54,7 +54,7 @@ function NavBar() {
           <li>
             <Link href="/profile">
               <a className="dropdown-item" href="#">
-                Thông tin cá nhân
+                <i className="fas fa-id-card" aria-hidden></i> Thông tin cá nhân
               </a>
             </Link>
           </li>
@@ -80,21 +80,21 @@ function NavBar() {
         <li>
           <Link href="/users">
             <a className="dropdown-item" href="#">
-              Người dùng
+              <i className="fas fa-users" aria-hidden></i> Người dùng
             </a>
           </Link>
         </li>
         <li>
           <Link href="/create">
             <a className="dropdown-item" href="#">
-              Sản phẩm
+              <i className="fas fa-boxes" aria-hidden></i> Sản phẩm
             </a>
           </Link>
         </li>
         <li>
           <Link href="/categories">
             <a className="dropdown-item" href="#">
-              Danh mục
+              <i className="fas fa-list" aria-hidden></i> Danh mục
             </a>
           </Link>
         </li>

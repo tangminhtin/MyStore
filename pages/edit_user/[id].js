@@ -95,7 +95,7 @@ const EditUser = () => {
             checked={checkAdmin}
             onChange={handleCheck}
           />
-          <label htmlFor="isAdmin" class="form-check-label">
+          <label htmlFor="isAdmin" className="form-check-label">
             Đánh dấu là quản trị viên
           </label>
         </div>
