@@ -5,6 +5,7 @@ import Link from "next/link";
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
 import { imageUpload } from "../utils/imageUpload";
+import { useRouter } from "next/router";
 
 const Profile = () => {
   const initialState = {
@@ -19,6 +20,8 @@ const Profile = () => {
 
   const { state, dispatch } = useContext(DataContext);
   const { auth, notify, orders } = state;
+
+  const router = useRouter();
 
   useEffect(() => {
     if (auth.user) setData({ ...data, name: auth.user.name });
@@ -40,7 +43,7 @@ const Profile = () => {
       updatePassword();
     }
 
-    if (name !== auth.name && name || avatar) updateInfor();
+    if ((name !== auth.name && name) || avatar) updateInfor();
   };
 
   const updatePassword = () => {
@@ -111,7 +114,10 @@ const Profile = () => {
         <title>Thông tin cá nhân</title>
       </Head>
 
-      <section className="row text-secondary my-3">
+      <section className="row text-secondary shadow p-4">
+        <h1 className="text-uppercase text-center p-3 text-primary">
+          Thông tin cá nhân
+        </h1>
         <div className="col-md-4 table-responsive">
           <h3 className="text-center text-uppercase">
             {auth.user.role === "user"
@@ -181,7 +187,7 @@ const Profile = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-dark my-3"
+            className="btn btn-warning my-3"
             disabled={notify.loading}
             onClick={handleUpdateProfile}
           >
@@ -189,7 +195,7 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className="col-md-8 table-responsive">
+        <div className="col-md-8 table-responsive ">
           <h3 className="text-uppercase">Đơn hàng</h3>
           <div className="my-3 table-responsive">
             <table
@@ -236,6 +242,11 @@ const Profile = () => {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className="d-flex justify-content-between pb-4 pt-5">
+          <button className="btn btn-dark" onClick={() => router.back()}>
+            <i className="fas fa-arrow-circle-left" aria-hidden></i> Trở về
+          </button>
         </div>
       </section>
     </div>

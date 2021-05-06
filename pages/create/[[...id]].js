@@ -150,10 +150,13 @@ const NewProduct = () => {
   };
 
   return (
-    <div>
+    <div className="container p-4">
       <Head>
-        <title>Thêm mới sản phẩm</title>
+        <title>{id ? "Chỉnh sửa sản phẩm" : "Thêm mới sản phẩm"}</title>
       </Head>
+      <h1 className="text-uppercase text-center p-3 text-primary">
+        {id ? "Chỉnh sửa sản phẩm" : "Thêm mới sản phẩm"}
+      </h1>
       <form className="row" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="imagesFile" className="form-label">
@@ -282,6 +285,11 @@ const NewProduct = () => {
           </button>
         </div>
       </form>
+      <div className="d-flex justify-content-between mt-5">
+        <button className="btn btn-dark" onClick={() => router.back()}>
+          <i className="fas fa-arrow-circle-left" aria-hidden></i> Trở về
+        </button>
+      </div>
     </div>
   );
 };

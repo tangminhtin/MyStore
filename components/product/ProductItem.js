@@ -25,6 +25,37 @@ const ProductItem = ({ product }) => {
     );
   };
 
+  const adminLink = () => {
+    return (
+      <>
+        <Link href={`/create/${product._id}`}>
+          <a className={"btn btn-info w-100 me-1 " + classes.button}>Sửa</a>
+        </Link>
+        <button
+          className={"btn btn-danger w-100 ms-1 " + classes.button}
+          title="Remove"
+          data-bs-toggle="modal"
+          data-bs-target="#itemTrash"
+          onClick={() =>
+            dispatch({
+              type: "ADD_MODAL",
+              payload: [
+                {
+                  data: "",
+                  id: product._id,
+                  title: product.title,
+                  type: "DELETE_PRODUCT",
+                },
+              ],
+            })
+          }
+        >
+          Xóa
+        </button>
+      </>
+    );
+  };
+
   return (
     <div className="col" style={{ cursor: "pointer" }}>
       <div className={"card h-100 " + classes.borderCard}>
@@ -53,15 +84,22 @@ const ProductItem = ({ product }) => {
           </div>
         </Link>
         <div className={"card-footer " + classes.borderCard}>
-          <div className="d-flex justify-content-between">
+          <div
+            className="d-flex justify-content-between"
+            style={{ fontSize: "15px" }}
+          >
             <p className="text-danger mb-1">{product.price}₫</p>
             {product.inStock > 0 ? (
-              <p className="text-danger mb-1">Kho còn: {product.inStock}</p>
+              <p className="text-danger mb-1">Còn: {product.inStock}</p>
             ) : (
               <p className="text-danger mb-1">Hết hàng</p>
             )}
           </div>
-          <div className="d-flex justify-content-between">{userLink()}</div>
+          <div className="d-flex justify-content-between">
+            {!auth.user || auth.user.role !== "admin"
+              ? userLink()
+              : adminLink()}
+          </div>
         </div>
       </div>
     </div>

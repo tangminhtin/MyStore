@@ -56,7 +56,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="table-responsive shadow rounded-bottom">
+    <div className="table-responsive shadow rounded-bottom p-4">
       <Head>
         <title>Danh mục sản phẩm</title>
       </Head>
