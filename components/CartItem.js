@@ -9,7 +9,7 @@ const CartItem = ({ item, dispatch, cart }) => {
           src={item.images[0].url}
           alt={item.images[0].url}
           className="img-thumbnail w-100"
-          style={{ minWidth: "80px", height: "80px" }}
+          style={{ minWidth: "80px", height: "80px", objectFit: "cover" }}
         />
       </td>
       <td style={{ minWidth: "200px" }} className="w-50 align-middle">

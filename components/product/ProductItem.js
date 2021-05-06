@@ -38,7 +38,7 @@ const ProductItem = ({ product }) => {
             />
             <div className="card-body">
               <h5
-                className={"card-title " + classes.cardTitle}
+                className={"text-capitalize card-title " + classes.cardTitle}
                 title={product.title}
               >
                 {product.title}
