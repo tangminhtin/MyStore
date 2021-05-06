@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { DataContext } from "../../store/GlobalState";
 import { addToCart } from "../../store/Actions";
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({ product, handleCheck }) => {
   const { state, dispatch } = useContext(DataContext);
   const { cart, auth } = state;
 
@@ -33,7 +33,7 @@ const ProductItem = ({ product }) => {
         </Link>
         <button
           className={"btn btn-danger w-100 ms-1 " + classes.button}
-          title="Remove"
+          title="Xóa"
           data-bs-toggle="modal"
           data-bs-target="#itemTrash"
           onClick={() =>
@@ -59,6 +59,15 @@ const ProductItem = ({ product }) => {
   return (
     <div className="col" style={{ cursor: "pointer" }}>
       <div className={"card h-100 " + classes.borderCard}>
+        {auth.user && auth.user.role === "admin" && (
+          <input
+            type="checkbox"
+            className="position-absolute form-check-input shadow"
+            style={{ height: "30px", width: "30px", right: 12, top: 8 }}
+            checked={product.checked}
+            onChange={() => handleCheck(product._id)}
+          />
+        )}
         <Link href={`product/${product._id}`}>
           <div>
             <img

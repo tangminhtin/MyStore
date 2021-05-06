@@ -12,7 +12,7 @@ const NewProduct = () => {
     inStock: 0,
     description: "",
     content: "",
-    category: "",
+    category: "all",
   };
 
   const [product, setProduct] = useState(initialStatte);
@@ -246,7 +246,9 @@ const NewProduct = () => {
               value={category}
               onChange={handleChangeInput}
             >
-              <option value="all">Chọn danh mục</option>
+              <option value="all" defaultValue>
+                Chọn danh mục
+              </option>
               {categories.map((item) => (
                 <option key={item._id} value={item._id}>
                   {item.name}
