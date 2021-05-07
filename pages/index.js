@@ -5,7 +5,7 @@ import { getData } from "../utils/fetchData";
 import { useRouter } from "next/router";
 import ProductItem from "../components/product/ProductItem";
 import filterSearch from "../utils/filterSearch";
-// import Filter from "../components/Filter";
+import Filter from "../components/Filter";
 import Slider from "../components/Slider";
 
 const Home = (props) => {
@@ -67,7 +67,7 @@ const Home = (props) => {
       </Head>
       <Slider />
 
-      {/* <Filter state={state} /> */}
+      <Filter state={state} />
 
       {auth.user && auth.user.role === "admin" && (
         <div className="d-flex justify-content-end mt-3">
@@ -112,7 +112,7 @@ const Home = (props) => {
         )}
       </div>
 
-      {props.result < page * 6 ? (
+      {props.result < page * 8 ? (
         ""
       ) : (
         <button
