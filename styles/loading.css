@@ -12,6 +12,15 @@
   animation: text 1s ease-in-out infinite;
 }
 
+.loading text {
+  font-size: 25px;
+}
+
+.tin {
+  font-size: 20px !important;
+  text-transform: capitalize;
+}
+
 @keyframes text {
   50% {
     opacity: 0.1;
@@ -19,14 +28,14 @@
 }
 
 .loading polygon {
-  stroke-dasharray: 22;
+  stroke-dasharray: 30;
   stroke-dashoffset: 1;
-  animation: dash 4s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite
+  animation: dash 3s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite
     alternate-reverse;
 }
 
 @keyframes dash {
   to {
-    stroke-dashoffset: 234;
+    stroke-dashoffset: 200;
   }
 }
