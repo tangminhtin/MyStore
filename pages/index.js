@@ -2,18 +2,18 @@ import Head from "next/head";
 import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
 import { getData } from "../utils/fetchData";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import ProductItem from "../components/product/ProductItem";
-// import filterSearch from "../utils/filterSearch";
+import filterSearch from "../utils/filterSearch";
 // import Filter from "../components/Filter";
 import Slider from "../components/Slider";
 
 const Home = (props) => {
   const [products, setProducts] = useState(props.products);
   const [isCheck, setIsCheck] = useState(false);
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const { state, dispatch } = useContext(DataContext);
   const { auth } = state;
@@ -22,9 +22,9 @@ const Home = (props) => {
     setProducts(props.products);
   }, [props.products]);
 
-  // useEffect(() => {
-  //   if (Object.keys(router.query).length === 0) setPage(1);
-  // }, [router.query]);
+  useEffect(() => {
+    if (Object.keys(router.query).length === 0) setPage(1);
+  }, [router.query]);
 
   const handleCheck = (id) => {
     products.forEach((product) => {
@@ -55,10 +55,10 @@ const Home = (props) => {
     dispatch({ type: "ADD_MODAL", payload: deleteArr });
   };
 
-  // const handleLoadMore = () => {
-  //   setPage(page + 1);
-  //   filterSearch({ router, page: page + 1 });
-  // };
+  const handleLoadMore = () => {
+    setPage(page + 1);
+    filterSearch({ router, page: page + 1 });
+  };
 
   return (
     <div>
@@ -96,13 +96,6 @@ const Home = (props) => {
             Xóa các mục đã chọn
           </button>
         </div>
-
-        // <div className="btn btn-danger">
-        //   <input type="checkbox" />
-        //   <button type="button" className="btn btn-info">
-        //     Xóa tất cả
-        //   </button>
-        // </div>
       )}
 
       <div className="row row-cols-2 row-cols-md-4 g-4 mt-2">
@@ -119,30 +112,31 @@ const Home = (props) => {
         )}
       </div>
 
-      {/* {props.result < page * 6 ? (
+      {props.result < page * 6 ? (
         ""
       ) : (
-        <button className="btn btn-outline-info mx-auto d-block m-5">
+        <button
+          className="btn btn-outline-primary mx-auto d-block m-5"
+          onClick={handleLoadMore}
+        >
           Xem thêm
         </button>
-      )} */}
+      )}
     </div>
   );
 };
 
-export async function getServerSideProps() {
-  // const page = query.page || 1;
-  // const category = query.category || "all";
-  // const sort = query.sort || "";
-  // const search = query.search || "all";
+export async function getServerSideProps({ query }) {
+  const page = query.page || 1;
+  const category = query.category || "all";
+  const sort = query.sort || "";
+  const search = query.search || "all";
 
-  // const res = await getData(
-  //   `product?limit=${
-  //     page * 6
-  //   }&category=${category}&sort=${sort}&title=${search}`
-  // );
-
-  const res = await getData("product");
+  const res = await getData(
+    `product?limit=${
+      page * 8
+    }&category=${category}&sort=${sort}&title=${search}`
+  );
 
   return {
     props: {
