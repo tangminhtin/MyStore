@@ -197,51 +197,57 @@ const Profile = () => {
 
         <div className="col-md-8 table-responsive ">
           <h3 className="text-uppercase">Đơn hàng</h3>
-          <div className="my-3 table-responsive">
-            <table
-              className="table-bordered table-hover w-100 text-uppercase"
-              style={{ minWidth: "600px", cursor: "pointer" }}
-            >
-              <thead className="bg-light fw-bold text-center">
-                <tr>
-                  <td className="p-2">Mã đơn hàng</td>
-                  <td className="p-2">Ngày mua</td>
-                  <td className="p-2">Tổng tiền</td>
-                  <td className="p-2">Giao hàng</td>
-                  <td className="p-2">Thanh toán</td>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order._id} className="text-center">
-                    <td className="p-2">
-                      <Link href={`/order/${order._id}`}>
-                        <a>{order._id}</a>
-                      </Link>
-                    </td>
-                    <td className="p-2">
-                      {new Date(order.createdAt).toLocaleDateString("vi-VN")}
-                    </td>
-                    <td className="p-2 text-end">{order.total}₫</td>
-                    <td className="p-2">
-                      {order.delivered ? (
-                        <i className="fas fa-check text-success"></i>
-                      ) : (
-                        <i className="fas fa-times text-danger"></i>
-                      )}
-                    </td>
-                    <td className="p-2">
-                      {order.paid ? (
-                        <i className="fas fa-check text-success"></i>
-                      ) : (
-                        <i className="fas fa-times text-danger"></i>
-                      )}
-                    </td>
+          {orders.length === 0 ? (
+            <h5 className="text-danger text-center">
+              Bạn không có đơn hàng nào
+            </h5>
+          ) : (
+            <div className="my-3 table-responsive">
+              <table
+                className="table-bordered table-hover w-100 text-uppercase"
+                style={{ minWidth: "600px", cursor: "pointer" }}
+              >
+                <thead className="bg-light fw-bold text-center">
+                  <tr>
+                    <td className="p-2">Mã đơn hàng</td>
+                    <td className="p-2">Ngày mua</td>
+                    <td className="p-2">Tổng tiền</td>
+                    <td className="p-2">Giao hàng</td>
+                    <td className="p-2">Thanh toán</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order._id} className="text-center">
+                      <td className="p-2">
+                        <Link href={`/order/${order._id}`}>
+                          <a>{order._id}</a>
+                        </Link>
+                      </td>
+                      <td className="p-2">
+                        {new Date(order.createdAt).toLocaleDateString("vi-VN")}
+                      </td>
+                      <td className="p-2 text-end">{order.total}₫</td>
+                      <td className="p-2">
+                        {order.delivered ? (
+                          <i className="fas fa-check text-success"></i>
+                        ) : (
+                          <i className="fas fa-times text-danger"></i>
+                        )}
+                      </td>
+                      <td className="p-2">
+                        {order.paid ? (
+                          <i className="fas fa-check text-success"></i>
+                        ) : (
+                          <i className="fas fa-times text-danger"></i>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
         <div className="d-flex justify-content-between pb-4 pt-5">
           <button className="btn btn-dark" onClick={() => router.back()}>

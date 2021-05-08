@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import filterSearch from "../utils/filterSearch";
-import { getData } from "../utils/fetchData";
 import { useRouter } from "next/router";
 
 const Filter = ({ state }) => {
@@ -29,10 +28,14 @@ const Filter = ({ state }) => {
   }, [search]);
 
   return (
-    <div className="input-group">
-      <div className="input-group-prepend col-md-2 px-0 mt-2">
+    <div className="row justify-content-between pt-3 fw-bold">
+      <div className="col text-start">
+        <label className="p-2 rounded" htmlFor="filter">
+          Lọc theo
+        </label>
         <select
-          className="text-capitalize"
+          className="text-capitalize p-1 rounded shadow border-warning"
+          style={{}}
           value={category}
           onChange={handleCategory}
         >
@@ -45,18 +48,16 @@ const Filter = ({ state }) => {
         </select>
       </div>
 
-      <form autoComplete="off" className="mt-2 col-md-8 px-0">
-        <input
-          type="text"
-          className="form-control"
-          list="title_product"
-          value={search.toLocaleLowerCase()}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </form>
-
-      <div className="input-group-prepend col-md-2 px-0 mt-2">
-        <select className="text-capitalize" value={sort} onChange={handleSort}>
+      <div className="col text-end">
+        <label className="p-2 rounded" htmlFor="sort">
+          Sắp xếp theo
+        </label>
+        <select
+          className="text-capitalize p-1 rounded shadow border-warning"
+          id="sort"
+          value={sort}
+          onChange={handleSort}
+        >
           <option value="-createdAt">Mới nhất</option>
           <option value="oldest">Cũ nhất</option>
           <option value="-sold">Bán chạy</option>

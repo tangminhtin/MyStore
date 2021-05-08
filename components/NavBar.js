@@ -1,16 +1,25 @@
 import classes from "./NavBar.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../store/GlobalState";
 import Cookie from "js-cookie";
+import filterSearch from "../utils/filterSearch";
 
 function NavBar() {
   const router = useRouter();
   const { state, dispatch } = useContext(DataContext);
   const { auth, cart } = state;
+  const [search, setSearch] = useState("");
 
   const isActive = (r) => (r === router.pathname ? " " + classes.active : "");
+
+  useEffect(() => {
+    filterSearch({
+      router,
+      search: search ? search.toLocaleLowerCase() : "all",
+    });
+  }, [search]);
 
   const handleLogout = () => {
     Cookie.remove("refreshtoken", { path: "api/auth/accessToken" });
@@ -178,16 +187,24 @@ function NavBar() {
             </li>
             {Object.keys(auth).length === 0 ? loginRouter() : loggedRouter()}
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Nhập sản phẩm..."
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              <i className="fas fa-search" aria-hidden></i>
-            </button>
+          <form className="d-flex w-90" autoComplete="off">
+            <div className="input-group">
+              <span
+                className="input-group-addon text-info btn"
+                style={{ marginRight: "-45px", zIndex: 9 }}
+              >
+                <i className="fas fa-search" aria-hidden></i>
+              </span>
+              <input
+                className="form-control me-2 rounded-pill ps-5"
+                type="search"
+                placeholder="Nhập sản phẩm..."
+                aria-label="Search"
+                list="title_product"
+                value={search.toLocaleLowerCase()}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </form>
         </div>
       </div>
